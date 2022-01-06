@@ -51,3 +51,4 @@ MANIFEST
 # Per-project virtualenvs
 .venv*/
 .conda*/
+/tests/output_data/

@@ -1,0 +1,9 @@
+input
+-ID: (int)
+-datum: (datetime)
+-benutzer: (nvarchar(255))
+-tabelle: (nvarchar(255))
+-fk: (int)
+-attribut: (nvarchar(255))
+-wertvon: (nvarchar(255))
+-wertnach: (nvarchar(255))
