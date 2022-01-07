@@ -24,4 +24,3 @@ def test_folder_fixture():
     for folder in filter(lambda f: not os.path.exists(f), folders):
         os.makedirs(folder)
     return folders
-

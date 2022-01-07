@@ -7,7 +7,6 @@ import dataclasses
 from typing import List
 from dataclasses_json import dataclass_json
 
-
 from tabletosvg import __version__
 
 _logger = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ def read_file(filename):
     Returns:
       str: content of file
     """
-    with open(filename, "r") as file_object:
+    with open(filename, "r", encoding='UTF-8') as file_object:
         # Append 'hello' at the end of file
         content = file_object.read()
     return content
@@ -47,8 +46,9 @@ def write_file(filename, content):
     Returns:
       None: nothing
     """
-    with open(filename, "w") as file_object:
+    with open(filename, "w", encoding='UTF-8') as file_object:
         file_object.write(content)
+
 
 class OutputCreatorTxt:
     def __init__(self, container_name):
@@ -88,7 +88,7 @@ def create_output(database_input: List[DataBaseItem], table_name, outputfilename
 
 
 def read_csv(filename):
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='UTF-8') as file:
         reader = csv.reader(file, delimiter=";")
         database_input = []
         for each_row in reader:
@@ -114,7 +114,7 @@ def get_parser():
     parser.add_argument(
         "--version",
         action="version",
-        version="tabletosvg {ver}".format(ver=__version__),
+        version=f"tabletosvg {__version__}",
     )
     parser.add_argument("--file", help="Input file", default="input.txt", type=str)
     return parser

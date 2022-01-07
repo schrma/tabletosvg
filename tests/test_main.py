@@ -1,7 +1,9 @@
 import os
-import pytest
 import shlex
 
+import pytest
+
+import tabletosvg
 from tabletosvg.main import read_csv, create_output, read_file
 
 
@@ -16,6 +18,10 @@ def test___read_csv___no_error_raised(
 ):
     test = default_data_from_csv
 
+    assert test[0].name == 'ID'
+    assert test[-1].name == 'wertnach'
+
+
 def test___create_output___with_default_file___no_error_raised(
         test_folder,
         default_data_from_csv
@@ -28,8 +34,6 @@ def test___create_output___with_default_file___no_error_raised(
     result_content = read_file(reference_filenmae)
 
     assert output_content == result_content
-
-
 
 
 @pytest.mark.parametrize("filename", (

@@ -39,8 +39,29 @@ tabletosvg
 
 A longer description of your project goes here...
 
+Test
+
 
 .. _pyscaffold-notes:
+
+== Testing
+
+----
+pytest --cov tabletosvg --cov-report term-missing --verbose tests
+pylint --rcfile=setup.cfg src/tabletosvg tests
+pip install flake8
+----
+
+== Testing with tox
+----
+tox -e pylint
+tox -e py3
+tox -e flake8
+----
+
+All
+tox
+
 
 Note
 ====
