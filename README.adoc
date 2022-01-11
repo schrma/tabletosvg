@@ -1,50 +1,8 @@
-.. These are examples of badges you might want to add to your README:
-   please update the URLs accordingly
+= Project: tabletosvg
 
-    .. image:: https://api.cirrus-ci.com/github/<USER>/tabletosvg.svg?branch=main
-        :alt: Built Status
-        :target: https://cirrus-ci.com/github/<USER>/tabletosvg
-    .. image:: https://readthedocs.org/projects/tabletosvg/badge/?version=latest
-        :alt: ReadTheDocs
-        :target: https://tabletosvg.readthedocs.io/en/stable/
-    .. image:: https://img.shields.io/coveralls/github/<USER>/tabletosvg/main.svg
-        :alt: Coveralls
-        :target: https://coveralls.io/r/<USER>/tabletosvg
-    .. image:: https://img.shields.io/pypi/v/tabletosvg.svg
-        :alt: PyPI-Server
-        :target: https://pypi.org/project/tabletosvg/
-    .. image:: https://img.shields.io/conda/vn/conda-forge/tabletosvg.svg
-        :alt: Conda-Forge
-        :target: https://anaconda.org/conda-forge/tabletosvg
-    .. image:: https://pepy.tech/badge/tabletosvg/month
-        :alt: Monthly Downloads
-        :target: https://pepy.tech/project/tabletosvg
-    .. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
-        :alt: Twitter
-        :target: https://twitter.com/tabletosvg
+Tool convert a database into a text which could be intrpreded in drawIO
 
-.. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
-    :alt: Project generated with PyScaffold
-    :target: https://pyscaffold.org/
-
-|
-
-==========
-tabletosvg
-==========
-
-
-    Add a short description here!
-
-
-A longer description of your project goes here...
-
-Test
-
-
-.. _pyscaffold-notes:
-
-== Testing
+=== Developement Testing
 
 ----
 pytest --cov tabletosvg --cov-report term-missing --verbose tests
@@ -52,7 +10,7 @@ pylint --rcfile=setup.cfg src/tabletosvg tests
 pip install flake8
 ----
 
-== Testing with tox
+=== Testing with tox
 ----
 tox -e pylint
 tox -e py3
@@ -60,11 +18,13 @@ tox -e flake8
 ----
 
 All
+
+----
 tox
+----
 
 
-Note
-====
+= Note
 
 This project has been set up using PyScaffold 4.1.2. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
