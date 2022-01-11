@@ -4,6 +4,7 @@ from typing import List
 import logging
 import csv
 import dataclasses
+import pyperclip
 
 from dataclasses_json import dataclass_json
 
@@ -76,7 +77,14 @@ class OutputCreatorTxt:
         write_file(filename, self._content)
 
 
+def copy_to_clip(text):
+    pyperclip.copy(text)
+
+
 def create_output(database_input: List[DataBaseItem], table_name, outputfilename=None):
+    if not database_input:
+        return
+    _logger.debug("Table name: %s", table_name)
     output_creator_txt = OutputCreatorTxt(table_name)
     output_creator_txt.add_intro()
     for row in database_input:
@@ -85,19 +93,21 @@ def create_output(database_input: List[DataBaseItem], table_name, outputfilename
         output_creator_txt.write(outputfilename)
     else:
         output_creator_txt.print_content()
+    copy_to_clip(output_creator_txt.content)
 
 
 def read_csv(filename):
+    database_input = None
     try:
         file_handler = open(filename, 'r', encoding='UTF-8')
+        with file_handler:
+            reader = csv.reader(file_handler, delimiter=";")
+            database_input = []
+            for each_row in reader:
+                item = DataBaseItem(each_row[0], each_row[1])
+                database_input.append(item)
     except FileNotFoundError as fnf_error:
         _logger.error(fnf_error)
-    with file_handler:
-        reader = csv.reader(file_handler, delimiter=";")
-        database_input = []
-        for each_row in reader:
-            item = DataBaseItem(each_row[0], each_row[1])
-            database_input.append(item)
     return database_input
 
 
@@ -109,7 +119,7 @@ def setup_logging(loglevel):
     """
     logformat = " [%(asctime)s]%(levelname)s:%(name)s:%(message)s"
     logging.basicConfig(
-        level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
+        level=loglevel.upper(), stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
     )
 
 
@@ -117,6 +127,11 @@ def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(dest='input_file', help="This is the first argument", type=str)
     parser.add_argument("--output_file", help="File to save result", default="output.txt", type=str)
+    parser.add_argument('-log',
+                        '--loglevel',
+                        default='info',
+                        help='Provide logging level. Example --log debug, default=info')
+
     parser.add_argument(
         "--version",
         action="version",
@@ -133,13 +148,23 @@ def parse_command_line_args(args=None):
 def main(**kwargs):
     input_file = kwargs["input_file"]
     outputfilename = kwargs["output_file"]
-    setup_logging(logging.DEBUG)
-    _logger.debug("Starting main functinon...")
+    setup_logging(kwargs["loglevel"])
+    _logger.debug("Starting main function...")
+    _logger.info("Input file: %s", input_file)
+    _logger.info("Output file: %s", outputfilename)
     data_from_csv = read_csv(input_file)
     create_output(data_from_csv, "input", outputfilename=outputfilename)
-    _logger.info("Script ends here")
+    _logger.debug("Ending ...")
     return 0
 
 
+def run():
+    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
+
+    This function can be used as entry point to create console scripts with setuptools.
+    """
+    return main(**parse_command_line_args())
+
+
 if __name__ == "__main__":
-    sys.exit(main(**parse_command_line_args()))
+    sys.exit(run())
