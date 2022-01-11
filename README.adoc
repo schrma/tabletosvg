@@ -19,6 +19,27 @@ tool_conversion path_to_csv_file
 Copy into DrawIO
 ----
 
+== Running
+Use ```app\run.bat```
+
+Then
+
+----
+usage: tool_conversion [-h] [-out OUTPUT_FILE] [-log LOGLEVEL] [--version] input_file
+
+positional arguments:
+  input_file            CSV-File from database
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -out OUTPUT_FILE, --output_file OUTPUT_FILE
+                        File to save result
+  -log LOGLEVEL, --loglevel LOGLEVEL
+                        Provide logging level. Example --log debug, default=info
+  --version             show program's version number and exit
+
+----
+
 == Developement Testing
 
 ----

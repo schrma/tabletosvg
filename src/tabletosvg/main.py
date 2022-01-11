@@ -133,12 +133,14 @@ def setup_logging(loglevel):
 
 def get_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument(dest='input_file', help="This is the first argument", type=str)
-    parser.add_argument("--output_file", help="File to save result", default="output.txt", type=str)
-    parser.add_argument('-log',
-                        '--loglevel',
-                        default='info',
-                        help='Provide logging level. Example --log debug, default=info')
+    parser.add_argument(dest='input_file', help="CSV-File from database", type=str)
+    parser.add_argument("-out", "--output_file", help="File to save result", default="output.txt", type=str)
+    parser.add_argument(
+        '-log',
+        '--loglevel',
+        default='info',
+        help='Provide logging level. Example --log debug, default=info'
+    )
 
     parser.add_argument(
         "--version",
