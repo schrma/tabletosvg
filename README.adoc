@@ -2,7 +2,24 @@
 
 Tool convert a database into a text which could be intrpreded in drawIO
 
-=== Developement Testing
+== Installation
+
+Tools installation:
+
+1. Install Python > 3.8 from https://www.python.org/downloads/
+2. Install Git from https://git-scm.com/download/win
+
+Get Code from Github
+----
+git clone https://github.com/schrma/tabletosvg.git
+cd tabletosvg
+app\install.bat
+app\run.bat
+tool_conversion path_to_csv_file
+Copy into DrawIO
+----
+
+== Developement Testing
 
 ----
 pytest --cov tabletosvg --cov-report term-missing --verbose tests
@@ -10,7 +27,7 @@ pylint --rcfile=setup.cfg src/tabletosvg tests
 pip install flake8
 ----
 
-=== Testing with tox
+== Testing with tox
 ----
 tox -e pylint
 tox -e py3
