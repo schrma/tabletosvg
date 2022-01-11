@@ -1,3 +1,3 @@
 pip install tox tox-wheel pylint
-tox
+tox -e py3
 pause
