@@ -1,3 +1,4 @@
+import os
 import argparse
 import sys
 from typing import List
@@ -49,6 +50,13 @@ def write_file(filename, content):
     """
     with open(filename, "w", encoding='UTF-8') as file_object:
         file_object.write(content)
+
+
+def split_path(fullfilename):
+    path = os.path.dirname(fullfilename)
+    filename_with_extension = os.path.basename(fullfilename)
+    base_filename, extension = os.path.splitext(filename_with_extension)
+    return path, base_filename, extension
 
 
 class OutputCreatorTxt:
@@ -146,14 +154,15 @@ def parse_command_line_args(args=None):
 
 
 def main(**kwargs):
-    input_file = kwargs["input_file"]
+    full_input_file = kwargs["input_file"]
     outputfilename = kwargs["output_file"]
     setup_logging(kwargs["loglevel"])
     _logger.debug("Starting main function...")
-    _logger.info("Input file: %s", input_file)
+    _logger.info("Input file: %s", full_input_file)
     _logger.info("Output file: %s", outputfilename)
-    data_from_csv = read_csv(input_file)
-    create_output(data_from_csv, "input", outputfilename=outputfilename)
+    data_from_csv = read_csv(full_input_file)
+    _, table_name, _ = split_path(full_input_file)
+    create_output(data_from_csv, table_name, outputfilename=None)
     _logger.debug("Ending ...")
     return 0
 
