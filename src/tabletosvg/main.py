@@ -1,10 +1,10 @@
 import argparse
 import sys
+from typing import List
 import logging
 import csv
 import dataclasses
 
-from typing import List
 from dataclasses_json import dataclass_json
 
 from tabletosvg import __version__
@@ -88,8 +88,12 @@ def create_output(database_input: List[DataBaseItem], table_name, outputfilename
 
 
 def read_csv(filename):
-    with open(filename, 'r', encoding='UTF-8') as file:
-        reader = csv.reader(file, delimiter=";")
+    try:
+        file_handler = open(filename, 'r', encoding='UTF-8')
+    except FileNotFoundError as fnf_error:
+        _logger.error(fnf_error)
+    with file_handler:
+        reader = csv.reader(file_handler, delimiter=";")
         database_input = []
         for each_row in reader:
             item = DataBaseItem(each_row[0], each_row[1])
@@ -111,12 +115,13 @@ def setup_logging(loglevel):
 
 def get_parser():
     parser = argparse.ArgumentParser()
+    parser.add_argument(dest='input_file', help="This is the first argument", type=str)
+    parser.add_argument("--output_file", help="File to save result", default="output.txt", type=str)
     parser.add_argument(
         "--version",
         action="version",
         version=f"tabletosvg {__version__}",
     )
-    parser.add_argument("--file", help="Input file", default="input.txt", type=str)
     return parser
 
 
@@ -126,10 +131,12 @@ def parse_command_line_args(args=None):
 
 
 def main(**kwargs):
-    input_file = kwargs["file"]
+    input_file = kwargs["input_file"]
+    outputfilename = kwargs["output_file"]
     setup_logging(logging.DEBUG)
     _logger.debug("Starting main functinon...")
-    print(input_file)
+    data_from_csv = read_csv(input_file)
+    create_output(data_from_csv, "input", outputfilename=outputfilename)
     _logger.info("Script ends here")
     return 0
 
